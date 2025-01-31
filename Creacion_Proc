@@ -1,0 +1,115 @@
+-- PROCEDIMIENTOS
+
+--Crear un procedimiento para insertar nuevos pacientes.
+Create Proc NuevosPacientes(
+							@DNI_Paciente varchar(20),
+							@Nombre varchar(20),
+							@Apellido varchar(20),
+							@Dirección varchar(20),
+							@fNacimiento datetime,
+							@Telefono int,
+							@Email varchar(100),
+							@Observación varchar(100)
+							)
+AS
+Begin
+	Insert into dbo.Paciente (DNI,Nombre,Apellido,Dirección,fNacimiento,Telefono,Email,Observacion)
+	Values (@DNI_Paciente,@Nombre,@Apellido,@Dirección,@fNacimiento,@Telefono,@Email,@Observación)
+End
+
+GO
+
+
+--Crear un procedimiento para insertar nuevos médicos.
+Create Proc NuevosMedicos(
+							@DNI_Medico varchar(20),
+							@Nombre varchar(20),
+							@Apellido varchar(20),
+							@Especialidad varchar(20)
+							)
+AS
+Begin
+	Insert into dbo.Medico(DNI,Nombre,Apellido,Especialidad)
+	Values (@DNI_Medico,@Nombre,@Apellido,@Especialidad)
+End
+
+GO
+
+--Crear un procedimiento para insertar nuevos turnos.
+Create Proc NuevoTurno(
+						@FechaTurno datetime,
+						@idPaciente int,
+						@idMedico int,
+						@Estado varchar(20),
+						@Observacion varchar(100)
+						)
+AS
+Begin
+	Insert into dbo.Turnos(FechaTurno,idPaciente,idMedico,Estado,Observación)
+	Values (@FechaTurno,@idPaciente,@idMedico,@Estado,@Observacion)
+End
+GO
+
+--Crear un procedimiento para consultar el historial de un paciente.
+Alter Proc HistorialPaciente(
+							@idPaciente int
+							)
+As
+Begin
+	Select idPaciente,fechaHistoria,idTurno,idMedico from HistoriasClinicas
+	where idPaciente=@idPaciente
+End
+GO
+
+--Crear un procedimiento para realizar pagos y asociarlos correctamente a los turnos y pacientes.
+Alter Proc Pagos_TurnosPacientes(
+								@Fecha datetime,
+								@Dni varchar(20),
+								@idPaciente int,
+								@idTurno int,
+								@Monto money,
+								@Estado varchar(20)
+								)
+AS
+Begin
+	Insert into dbo.Pagos(Fecha,Dni,idPaciente,IdTurno,Monto,Estado)
+	Values (@Fecha,@Dni,@idPaciente,@idTurno,@Monto,@Estado)
+END
+GO
+
+--Crear un procedimiento para actualizar la información de un paciente.
+Alter Proc ActualizarPaciente(
+								@DNI_Paciente varchar(20),
+								@Nombre varchar(20),
+								@Apellido varchar(20),
+								@Dirección varchar(20),
+								@fNacimiento datetime,
+								@Telefono int,
+								@Email varchar(100),
+								@Observación varchar(100)
+								)
+AS
+Begin
+	Update Paciente
+	set Nombre=@Nombre,Apellido=@Apellido,
+		Dirección=@Dirección,fNacimiento=@fNacimiento,
+		Telefono=@Telefono,Email=@Email,Observacion=@Observación
+	where DNI=@DNI_Paciente
+End
+GO
+
+--Crear un procedimiento para actualizar la información de un medico.
+Create Proc ActualizarMedico(@DNI_Medico varchar(20),
+							@Nombre varchar(20),
+							@Apellido varchar(20),
+							@Especialidad varchar(20)
+							)
+AS
+Begin
+	Update Medico
+	set Nombre=@Nombre,Apellido=@Apellido,Especialidad=@Especialidad
+	where DNI=@DNI_Medico
+End
+GO
+
+--
