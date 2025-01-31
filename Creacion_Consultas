@@ -1,0 +1,42 @@
+
+--CONSULTAS
+
+--CONSULTA PARA OBTENER TODOS LOS TURNOS DE UN PACIENTE EN UN RANGO
+/*Aclaracion:
+			Determine el rango '2024-01-01 00:00:00' AND 
+			'2025-01-31 23:59:59' porque si ponia 
+			@FechaInicio o @FechaFin no me daba error*/
+Create view TurnosTotalesRango as
+SELECT P.DNI, P.Nombre, T.FechaTurno 
+FROM Turnos T 
+INNER JOIN Paciente P 
+ON P.idPaciente = T.idPaciente
+WHERE T.FechaTurno BETWEEN '2024-01-01 00:00:00' AND '2025-01-31 23:59:59'
+
+--CONSULTA PARA CALCULA EL TOTAL DE PAGOS REALIZADOS POR UN PACIENTE
+/*Aclaracion:
+			-No pude unificar las columnas de las tablas Paciente con la tabla Pagos*/
+Create PROCEDURE TotalPagosPaciente (@idPaciente INT)
+AS
+BEGIN 
+	SELECT P.idPaciente,P.Nombre,P.Apellido FROM Paciente P
+	Where P.idPaciente=@idPaciente
+	Select sum(PA.Monto) as MontoTotal from Pagos PA 
+	WHERE PA.idPaciente=@idPaciente
+END 
+
+--CONSULTA PARA OBTENER LA ESPECILIDAD DE UN MEDICO
+Create PROCEDURE ObtenerEspecialidadMedico (@idMedico int) as
+BEGIN
+SELECT Especialidad FROM Medico
+WHERE idMedico=@idMedico;
+END
+
+--CONSULTA PARA OBTENER LISTA DE LOS PACIENTES QUE AÚN NO HAN PAGADO SUS TURNOSS
+Create view PacienteDeudores as
+select P.Nombre,P.Apellido 
+from Paciente P
+Left Join Pagos PA on P.idPaciente=PA.idPaciente
+Where PA.Monto=0
+
+-----
