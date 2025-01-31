@@ -1,0 +1,51 @@
+--INGRESOS DE REGISTROS PARA VERIFICAR LOS PROCEDIMIENTOS
+
+--CONSULTAS SOBRE LOS PROCESOS
+
+--Ingreso de Nuevos Pacientes en la tabla Pacientes mediante el PROC NuevosPacientes
+Exec NuevosPacientes  '4433322','Maggie','Simpsons','Falsa1234','19790923',' ',' ',' '
+--Para visualizar la tabla: Select * from Paciente
+
+--Ingreso de Nuevos Medicos en la tabla Medicos mediante el PROC NuevosMedicos
+Exec NuevosMedicos '323232','Roberto','Perez','Clinica'
+--Para visualizar la tabla: Select * from Medico
+
+--Ingreso de Nuevos Turnos en la tabla Turnos mediante el PROC NuevoTurno
+Exec NuevoTurno '20250131',4,3,'Pendiente','Llega tarde'
+--Para visualizar la tabla: Select * from Turnos
+
+--Visualizar el historial de un paciente usando el proc HistorialPaciente
+Exec HistorialPaciente 2
+--Para visualizar la tabla: Select * from HistoriasClinicas
+
+--Ingreso de pagos y asociarlos a los turnos y pacientes mediante el PRO Pagos_TurnosPacientes
+Exec Pagos_TurnosPacientes '20250131','12345',1,9,1500,'Efectivo'
+--Para visualizar la tabla: Select * from Pagos
+
+--Visualizacion de la actualizacion de datos de un paciente mediante el PROC ActualizarPaciente
+Exec ActualizarPaciente '12345','Homero','Simpsons','Siempreviva 1234','19660530',5554444,'Homero@mail','Es diabetico'
+--Para visualizar la tabla: Select * from Paciente
+
+--Visualizacion de la actualizacion de datos de un medico mediante el PROC ActualizarMedico
+Exec ActualizarMedico '22333444','Pablo','Rodriguez','Clinico'
+--Para visualizar la tabla: Select * from Medico
+
+---------
+
+--VERIFICACION DE LAS CONSULTAS
+
+---Visualizacion de los turnos dentro de un rango de tiempo mediante la vista TurnosTotalesRango 
+select * from TurnosTotalesRango
+
+--Visualizacion del monto total de pagos de un paciente mediante el PROC TotalPagosPaciente
+Exec TotalPagosPaciente 1
+--Para visualizar la tabla: Select * from Pagos y Select * from Paciente
+
+--Visualizacion de la especialidad de un medico mediante el PROC ObtenerEspecialidadMedico
+exec ObtenerEspecialidadMedico 2
+--Para visualizar la tabla: Select * from Medico
+
+---Visualizacion de una lista de pacientes deudores mediante la vista PacientesDeudores
+select * from PacienteDeudores
+
+--------
