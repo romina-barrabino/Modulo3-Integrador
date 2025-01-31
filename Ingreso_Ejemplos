@@ -1,0 +1,49 @@
+
+--INGRESO DE REGISTROS EN TABLAS Y CONSULTAS SOBRE LAS TABLAS
+
+--Ingrese 6 registros de pacientes en la tabla Paciente
+Insert into [dbo].[Paciente] (Dni,Nombre,Apellido,Dirección,fNacimiento,Telefono,Email,Observacion)
+Values ('12345','Homero','Simpsons','Falsa1234','19600530',4444444,'Homero@mail','Es diabetico'),
+		('67890','Marge','Bubiee','Falsa1234','19610513',4444444,'Marge@mail',' '),
+		('0000001','Montgomery','Burns','Mansion001','18800513',5555555,' ','Tiene de todo '),
+		('987654321','Bart','Simpsons','Falsa1234','19781110',4444444,' ','Alergico '),
+		('123456789','Lisa','Bubiee','Falsa1234','19800501',4444444,' ',' '),
+		('5647382910','Larry','Burns','Mansion001','19500513',5555555,' ',' ')		
+--Para visualizar la tabla: Select * from Paciente 
+
+--Ingrese 3 registros de pacientes en la tabla Medico
+Insert into [dbo].[Medico] (Dni,Nombre,Apellido,Especialidad)
+Values ('22333444','Pablo','Gomez','Clinica'),
+		('55666777','Juan','Lopez','Ginecologo'),
+		('88999000','Morena','Perez','Oculista')	
+--Para visualizar la tabla: Select * from Medico 
+
+--Ingrese 3 registros de pacientes en la tabla Turnos
+Insert into [dbo].[Turnos] (FechaTurno,idPaciente,idMedico,Estado,Observación)
+Values ('20241203',2,2,'Realizado','Vuelve en 5 meses '),
+		('20250103',3,1,'Cancelado','Llamo por telefono para programar'),
+		('20250203',1,3,'Pendiente',' '),
+		('20250113',5,2,'Realizado',' '),
+		('20250113',5,1,'Realizado',' '),
+		('20250130',2,3,'Cancelado','Sin aviso previo')
+--Para visualizar la tabla: Select * from Turnos
+
+--Ingrese el historial de turnos en la tabla HistoriasClinicas desde la tabla Turnos
+INSERT INTO [dbo].[HistoriasClinicas] (fechaHistoria,idPaciente,idTurno,idMedico)
+SELECT FechaTurno,idPaciente,idTurnos,idMedico
+FROM [dbo].[Turnos]
+--Para visualizar la tabla: Select * from HistoriasClinicas
+
+
+--Ingrese los pagos de los pacientes en la tabla Pagos
+Insert into [dbo].[Pagos] (Fecha,Dni,idPaciente,IdTurno,Monto,Estado)
+Values ('20241203','67890',2,7,2000,'Efectivo'),
+		('20250103','0000001',3,8,0,'Cancelo'),
+		('20250203','12345',1,9,0,'Pendiente'),
+		('20250113','123456789',5,10,2000,'MercadoPago'),
+		('20250113','123456789',5,11,3000,'Efectivo'),
+		('20250130','67890',2,12,0,'Cancelo')
+--Para visualizar la tabla: Select * from Pagos 
+
+
+-------------
