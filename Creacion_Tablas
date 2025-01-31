@@ -1,0 +1,59 @@
+--Crear tabla Paciente
+Create table [dbo].[Paciente](idPaciente int identity (1,1) not null Primary key,
+							DNI varchar(20) null,
+							Nombre varchar(20) null,
+							Apellido varchar(20) null,
+							Dirección varchar(20) null,
+							fNacimiento datetime null,
+							Telefono int null,
+							Email varchar(100) null,
+							Observacion varchar(100) null
+							)
+
+--Crear tabla Medico
+Create table [dbo].[Medico](idMedico int identity (1,1) not null primary key,
+							DNI varchar(20) null,
+							Nombre varchar(20) null,
+							Apellido varchar(20) null,
+							Especialidad varchar(20) null
+							)
+
+--Crear tabla Turnos
+Create table [dbo].[Turnos] (idTurnos int identity (1,1) not null primary key,
+							FechaTurno datetime null,
+							idPaciente int foreign key references Paciente(idPaciente),
+							idMedico int foreign key references Medico(idMedico), 
+							Estado varchar(20) null,
+							Observación varchar(100) null
+							)
+							  --- Modifique la relacion idMedico relacion en el diagrama
+							  
+							  ---Realice modificaciones en columna estado
+							Alter Table [dbo].[Turnos]
+							Alter Column Estado varchar(20) null
+
+
+--Crear tabla HistoriasClinicas
+Create table [dbo].[HistoriasClinicas](idHistoria int identity (1,1) not null primary key,
+										fechaHistoria datetime null,
+										idPaciente int Foreign key references Paciente(IdPaciente),
+										idTurno int Foreign key references Turnos(IdTurnos),
+										idMedico int Foreign key references Medico(idMedico) 
+										)
+										 --- Modifique la relacion idMedico en el diagrama
+
+--Crear tabla Pagos
+Create table [dbo].[Pagos](
+							idPagos int identity (1,1) not null primary key,
+							Fecha datetime null,
+							Dni varchar(20) null,
+							idPaciente int foreign key references Paciente(idPaciente),
+							IdTurno int foreign key references Turnos(IdTurnos),
+							Monto money null,
+							Estado tinyint null
+							)
+							 ---Realice modificaciones en columna estado
+							Alter Table [dbo].[Pagos]
+							Alter Column Estado varchar(20) null
+
+	------------
